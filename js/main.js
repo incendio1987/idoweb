@@ -119,15 +119,17 @@ function initBeforeAfter() {
    SVG path #tp: CW from 9 o'clock
      0%=left  25%=top  50%=right  75%=bottom
 
-   Highlight: paintOrder stroke trick on textPath
-   (thick stroke behind text = curved "rectangle")
+   Highlight: invisible thick arc segments behind text.
+   On hover, the arc segment for that item lights up green,
+   text goes white. Follows the circle curve perfectly.
 
-   Submenu opens BELOW the top of circle area.
+   Click: rotates CLOCKWISE to 12 o'clock.
    ============================================ */
 function initCircularMenu() {
+  const svg = document.getElementById('menuSvg');
   const mg = document.getElementById('menuGroup');
   const sp = document.getElementById('submenuPanel');
-  if (!mg || !sp) return;
+  if (!svg || !mg || !sp) return;
 
   const MENU_DATA = window.IDOIA_MENU || {
     'películas':  { items: [{label:'peli 1',url:'pages/pelicula.html?id=1'},{label:'peli 2',url:'pages/pelicula.html?id=2'},{label:'peli 3',url:'pages/pelicula.html?id=3'},{label:'peli 4',url:'pages/pelicula.html?id=4'}] },
@@ -142,9 +144,10 @@ function initCircularMenu() {
   const menuLabels = ['PELÍCULAS','CONTACTO','TRABAJOS','GALARDONES','SOBRE MÍ','PROCESO'];
   const N = menuKeys.length;
   const itemSpan = 100 / N;
-  // Center each label roughly in its segment
   const OFFSETS = menuKeys.map((_, i) => (i * itemSpan) + 1);
   const TOP_PCT = 25;
+  const R = 270; // radius of the text path
+  const CX = 300, CY = 300; // center of SVG viewBox
 
   let activeMenu = null;
   let curAng = 0;
@@ -158,11 +161,47 @@ function initCircularMenu() {
     return getComputedStyle(document.documentElement).getPropertyValue(prop).trim();
   }
 
-  // Build text elements
+  // --- Build arc segments + text ---
   mg.innerHTML = '';
   const items = [];
 
+  // Helper: convert percentage on the CW path to angle in degrees
+  // Path starts at 9 o'clock (180°) going CW
+  // 0% = 180°, 25% = 270° (top/12 o'clock), 50% = 0°/360°, 75% = 90°
+  function pctToAngle(pct) {
+    return 180 + (pct / 100) * 360;
+  }
+
+  // Helper: create an arc path for a segment of the circle
+  function arcPath(startPct, endPct) {
+    const a1 = pctToAngle(startPct) * Math.PI / 180;
+    const a2 = pctToAngle(endPct) * Math.PI / 180;
+    const x1 = CX + R * Math.cos(a1);
+    const y1 = CY + R * Math.sin(a1);
+    const x2 = CX + R * Math.cos(a2);
+    const y2 = CY + R * Math.sin(a2);
+    const sweep = (endPct - startPct) > 50 ? 1 : 0;
+    return `M ${x1},${y1} A ${R},${R} 0 ${sweep},1 ${x2},${y2}`;
+  }
+
   menuKeys.forEach((key, idx) => {
+    // Arc segment: from a bit before the text start to a bit after
+    const arcStart = OFFSETS[idx] - 1;
+    const arcEnd = OFFSETS[idx] + itemSpan - 2;
+
+    // Create arc highlight path (the "band" behind text)
+    const arcEl = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    arcEl.setAttribute('d', arcPath(arcStart, arcEnd));
+    arcEl.setAttribute('fill', 'none');
+    arcEl.setAttribute('stroke', 'transparent');
+    arcEl.setAttribute('stroke-width', '28');
+    arcEl.setAttribute('stroke-linecap', 'round');
+    arcEl.style.transition = 'stroke 0.35s ease';
+    arcEl.style.pointerEvents = 'stroke';
+    arcEl.style.cursor = 'pointer';
+    mg.appendChild(arcEl);
+
+    // Create text
     const textEl = document.createElementNS('http://www.w3.org/2000/svg', 'text');
     const tp = document.createElementNS('http://www.w3.org/2000/svg', 'textPath');
     tp.setAttribute('href', '#tp');
@@ -176,82 +215,95 @@ function initCircularMenu() {
       'letter-spacing: var(--font-menu-spacing, 3px)',
       'fill: ' + primaryColor,
       'cursor: pointer',
-      'paint-order: stroke',
-      'stroke: transparent',
-      'stroke-width: 20px',
-      'stroke-linejoin: round',
-      'stroke-linecap: round',
-      'transition: fill 0.35s ease, stroke 0.35s ease'
+      'transition: fill 0.35s ease'
     ].join('; ');
 
     textEl.appendChild(tp);
     mg.appendChild(textEl);
-    items.push({ tp, textEl, key, idx });
+
+    items.push({ tp, textEl, arcEl, key, idx });
   });
 
-  // Hover
+  // --- Hover: light up arc segment ---
   items.forEach(item => {
-    item.textEl.addEventListener('mouseenter', () => {
+    function onEnter() {
       if (item.key === activeMenu) return;
+      item.arcEl.setAttribute('stroke', primaryColor);
       item.tp.style.fill = whiteColor;
-      item.tp.style.stroke = primaryColor;
-    });
-    item.textEl.addEventListener('mouseleave', () => {
+    }
+    function onLeave() {
       if (item.key === activeMenu) return;
+      item.arcEl.setAttribute('stroke', 'transparent');
       item.tp.style.fill = primaryColor;
-      item.tp.style.stroke = 'transparent';
+    }
+    item.textEl.addEventListener('mouseenter', onEnter);
+    item.textEl.addEventListener('mouseleave', onLeave);
+    item.arcEl.addEventListener('mouseenter', onEnter);
+    item.arcEl.addEventListener('mouseleave', onLeave);
+    // Click on arc too
+    item.arcEl.addEventListener('click', (e) => {
+      e.stopPropagation();
+      handleClick(item);
     });
   });
 
-  // Click
+  // --- Click: rotate CLOCKWISE to 12 o'clock ---
   items.forEach(item => {
     item.textEl.addEventListener('click', (e) => {
       e.stopPropagation();
-      if (animatingMenu) return;
-      if (activeMenu === item.key) { closeMenu(); return; }
-
-      spinning = false;
-
-      // Center of text ~ offset + ~3% (half a label width)
-      const textCenterPct = OFFSETS[item.idx] + 3;
-      const diffPct = TOP_PCT - textCenterPct;
-      const targetDeg = (diffPct / 100) * 360;
-
-      let delta = targetDeg - curAng;
-      while (delta > 180) delta -= 360;
-      while (delta < -180) delta += 360;
-
-      animatingMenu = true;
-      animateRotation(curAng, curAng + delta, 900, () => {
-        curAng = (curAng + delta) % 360;
-        if (curAng < 0) curAng += 360;
-        animatingMenu = false;
-
-        // Reset all
-        items.forEach(mi => {
-          mi.tp.style.fill = primaryColor;
-          mi.tp.style.stroke = 'transparent';
-        });
-        // Active
-        item.tp.style.fill = whiteColor;
-        item.tp.style.stroke = primaryColor;
-        activeMenu = item.key;
-
-        // Submenu
-        const data = MENU_DATA[item.key];
-        if (data) {
-          sp.innerHTML = data.items.map(it => `<a href="${it.url}">${it.label}</a>`).join('');
-          requestAnimationFrame(() => sp.classList.add('open'));
-        }
-      });
+      handleClick(item);
     });
   });
+
+  function handleClick(item) {
+    if (animatingMenu) return;
+    if (activeMenu === item.key) { closeMenu(); return; }
+
+    spinning = false;
+
+    // Center of text in path percentage
+    const textCenterPct = OFFSETS[item.idx] + 3;
+    const diffPct = TOP_PCT - textCenterPct;
+    // Convert to degrees
+    let targetDeg = (diffPct / 100) * 360;
+
+    // FORCE CLOCKWISE: delta must be positive (or zero)
+    // Normalize targetDeg relative to curAng
+    let delta = targetDeg - curAng;
+    // Normalize to 0..360 range (always clockwise)
+    while (delta < 0) delta += 360;
+    // If delta is 0, no rotation needed
+    if (delta > 359) delta = 0;
+
+    animatingMenu = true;
+    animateRotation(curAng, curAng + delta, 900, () => {
+      curAng = (curAng + delta) % 360;
+      animatingMenu = false;
+
+      // Reset all
+      items.forEach(mi => {
+        mi.tp.style.fill = primaryColor;
+        mi.arcEl.setAttribute('stroke', 'transparent');
+      });
+      // Active
+      item.tp.style.fill = whiteColor;
+      item.arcEl.setAttribute('stroke', primaryColor);
+      activeMenu = item.key;
+
+      // Submenu
+      const data = MENU_DATA[item.key];
+      if (data) {
+        sp.innerHTML = data.items.map(it => `<a href="${it.url}">${it.label}</a>`).join('');
+        requestAnimationFrame(() => sp.classList.add('open'));
+      }
+    });
+  }
 
   function closeMenu() {
     sp.classList.remove('open');
     items.forEach(mi => {
       mi.tp.style.fill = primaryColor;
-      mi.tp.style.stroke = 'transparent';
+      mi.arcEl.setAttribute('stroke', 'transparent');
     });
     activeMenu = null;
     setTimeout(() => { spinning = true; }, 300);
@@ -272,6 +324,7 @@ function initCircularMenu() {
     })(performance.now());
   }
 
+  // Continuous spin — CLOCKWISE (positive direction)
   (function spin() {
     if (spinning && !animatingMenu) {
       curAng = (curAng + 0.06) % 360;

@@ -235,7 +235,7 @@ body::after {
 /* === SUBMENU === */
 .submenu-container {
   position: absolute;
-  top: calc(-1 * var(--menu-gap) + 28px);
+  top: calc(-1 * var(--menu-gap) + 42px);
   left: 50%; transform: translateX(-50%);
   z-index: 50;
 }
@@ -275,7 +275,7 @@ body::after {
   :root {
     --poster-w: 110px; --poster-h: 155px;
     --side-margin: 14px;
-    --circle-size: min(380px, 52vw);
+    --circle-size: min(400px, 54vw);
     --menu-gap: 34px;
     --font-display-size: clamp(2rem, 5.5vw, 3.5rem);
     --font-menu-size: 10px;
@@ -287,30 +287,34 @@ body::after {
 
 @media (max-width: 600px) {
   :root {
-    --poster-w: 75px; --poster-h: 108px;
-    --side-margin: 8px;
-    --circle-size: min(300px, 62vw);
-    --menu-gap: 28px;
-    --font-display-size: clamp(1.6rem, 8vw, 2.6rem);
-    --font-menu-size: 8px;
+    --poster-w: 80px; --poster-h: 115px;
+    --side-margin: 6px;
+    --circle-size: min(320px, 68vw);
+    --menu-gap: 30px;
+    --font-display-size: clamp(1.5rem, 7.5vw, 2.4rem);
+    --font-menu-size: 7.5px;
     --font-menu-spacing: 1.5px;
     --border-width: 2px;
   }
+  /* Keep title on one line */
+  .header { white-space: nowrap; }
+  .title-main { white-space: nowrap; }
   .nav-arrow { font-size: 1.6rem; }
-  .nav-arrow-left { left: calc(var(--side-margin) + var(--poster-w) + 14px); }
-  .nav-arrow-right { right: calc(var(--side-margin) + var(--poster-w) + 14px); }
+  .nav-arrow-left { left: calc(var(--side-margin) + var(--poster-w) + 12px); }
+  .nav-arrow-right { right: calc(var(--side-margin) + var(--poster-w) + 12px); }
   .poster-label { font-size: 0.42rem; padding: 10px 6px; }
 }
 
 @media (max-width: 400px) {
   :root {
-    --poster-w: 58px; --poster-h: 84px;
-    --circle-size: min(240px, 64vw);
-    --menu-gap: 22px;
-    --font-display-size: clamp(1.4rem, 9vw, 2.2rem);
-    --font-menu-size: 7px;
+    --poster-w: 62px; --poster-h: 90px;
+    --circle-size: min(260px, 70vw);
+    --menu-gap: 24px;
+    --font-display-size: clamp(1.3rem, 8.5vw, 2rem);
+    --font-menu-size: 6.5px;
+    --font-menu-spacing: 1px;
   }
-  .nav-arrow-left { left: calc(var(--side-margin) + var(--poster-w) + 10px); }
-  .nav-arrow-right { right: calc(var(--side-margin) + var(--poster-w) + 10px); }
+  .nav-arrow-left { left: calc(var(--side-margin) + var(--poster-w) + 8px); }
+  .nav-arrow-right { right: calc(var(--side-margin) + var(--poster-w) + 8px); }
   .poster-label { font-size: 0.38rem; padding: 6px 4px; }
 }
