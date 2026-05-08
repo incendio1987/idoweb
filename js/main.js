@@ -161,13 +161,11 @@ function initCircularMenu() {
     return getComputedStyle(document.documentElement).getPropertyValue(prop).trim();
   }
 
-  // --- Build arc segments + text ---
+  // --- Build text first, then measure and create tight arcs ---
   mg.innerHTML = '';
   const items = [];
 
   // Helper: convert percentage on the CW path to angle in degrees
-  // Path starts at 9 o'clock (180°) going CW
-  // 0% = 180°, 25% = 270° (top/12 o'clock), 50% = 0°/360°, 75% = 90°
   function pctToAngle(pct) {
     return 180 + (pct / 100) * 360;
   }
@@ -184,24 +182,9 @@ function initCircularMenu() {
     return `M ${x1},${y1} A ${R},${R} 0 ${sweep},1 ${x2},${y2}`;
   }
 
+  // Step 1: Create all text elements
+  const textEls = [];
   menuKeys.forEach((key, idx) => {
-    // Arc segment: from a bit before the text start to a bit after
-    const arcStart = OFFSETS[idx] - 1;
-    const arcEnd = OFFSETS[idx] + itemSpan - 2;
-
-    // Create arc highlight path (the "band" behind text)
-    const arcEl = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-    arcEl.setAttribute('d', arcPath(arcStart, arcEnd));
-    arcEl.setAttribute('fill', 'none');
-    arcEl.setAttribute('stroke', 'transparent');
-    arcEl.setAttribute('stroke-width', '28');
-    arcEl.setAttribute('stroke-linecap', 'round');
-    arcEl.style.transition = 'stroke 0.35s ease';
-    arcEl.style.pointerEvents = 'stroke';
-    arcEl.style.cursor = 'pointer';
-    mg.appendChild(arcEl);
-
-    // Create text
     const textEl = document.createElementNS('http://www.w3.org/2000/svg', 'text');
     const tp = document.createElementNS('http://www.w3.org/2000/svg', 'textPath');
     tp.setAttribute('href', '#tp');
@@ -210,7 +193,7 @@ function initCircularMenu() {
 
     tp.style.cssText = [
       "font-family: 'DM Mono', monospace",
-      'font-size: var(--font-menu-size, 11px)',
+      'font-size: var(--font-menu-size, 12px)',
       'font-weight: 500',
       'letter-spacing: var(--font-menu-spacing, 3px)',
       'fill: ' + primaryColor,
@@ -220,40 +203,73 @@ function initCircularMenu() {
 
     textEl.appendChild(tp);
     mg.appendChild(textEl);
-
-    items.push({ tp, textEl, arcEl, key, idx });
+    textEls.push({ textEl, tp, key, idx });
   });
 
-  // --- Hover: light up arc segment ---
-  items.forEach(item => {
-    function onEnter() {
-      if (item.key === activeMenu) return;
-      item.arcEl.setAttribute('stroke', primaryColor);
-      item.tp.style.fill = whiteColor;
-    }
-    function onLeave() {
-      if (item.key === activeMenu) return;
-      item.arcEl.setAttribute('stroke', 'transparent');
-      item.tp.style.fill = primaryColor;
-    }
-    item.textEl.addEventListener('mouseenter', onEnter);
-    item.textEl.addEventListener('mouseleave', onLeave);
-    item.arcEl.addEventListener('mouseenter', onEnter);
-    item.arcEl.addEventListener('mouseleave', onLeave);
-    // Click on arc too
-    item.arcEl.addEventListener('click', (e) => {
-      e.stopPropagation();
-      handleClick(item);
+  // Step 2: After render, measure text widths and build tight arcs
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      const circumference = 2 * Math.PI * R; // total path length in SVG units
+
+      textEls.forEach(({ textEl, tp, key, idx }) => {
+        // Measure text length in SVG units
+        let textLen = 0;
+        try {
+          textLen = tp.getComputedTextLength ? tp.getComputedTextLength() : textEl.getComputedTextLength();
+        } catch(e) {
+          textLen = 60; // fallback
+        }
+
+        // Convert text length to percentage of circumference
+        const textPct = (textLen / circumference) * 100;
+        // Add small padding on each side (~1.2% of circle)
+        const padPct = 1.2;
+        const arcStart = OFFSETS[idx] - padPct;
+        const arcEnd = OFFSETS[idx] + textPct + padPct;
+
+        // Create arc
+        const arcEl = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        arcEl.setAttribute('d', arcPath(arcStart, arcEnd));
+        arcEl.setAttribute('fill', 'none');
+        arcEl.setAttribute('stroke', 'transparent');
+        arcEl.setAttribute('stroke-width', '28');
+        arcEl.setAttribute('stroke-linecap', 'round');
+        arcEl.style.transition = 'stroke 0.35s ease';
+        arcEl.style.pointerEvents = 'stroke';
+        arcEl.style.cursor = 'pointer';
+
+        // Insert arc BEFORE text so text renders on top
+        mg.insertBefore(arcEl, textEl);
+
+        items.push({ tp, textEl, arcEl, key, idx });
+      });
+
+      // Attach events after arcs are built
+      attachEvents();
     });
   });
 
-  // --- Click: rotate CLOCKWISE to 12 o'clock ---
-  items.forEach(item => {
-    item.textEl.addEventListener('click', (e) => {
-      e.stopPropagation();
-      handleClick(item);
+  // --- Events (called after arcs are built) ---
+  function attachEvents() {
+    items.forEach(item => {
+      function onEnter() {
+        if (item.key === activeMenu) return;
+        item.arcEl.setAttribute('stroke', primaryColor);
+        item.tp.style.fill = whiteColor;
+      }
+      function onLeave() {
+        if (item.key === activeMenu) return;
+        item.arcEl.setAttribute('stroke', 'transparent');
+        item.tp.style.fill = primaryColor;
+      }
+      item.textEl.addEventListener('mouseenter', onEnter);
+      item.textEl.addEventListener('mouseleave', onLeave);
+      item.arcEl.addEventListener('mouseenter', onEnter);
+      item.arcEl.addEventListener('mouseleave', onLeave);
+      item.arcEl.addEventListener('click', (e) => { e.stopPropagation(); handleClick(item); });
+      item.textEl.addEventListener('click', (e) => { e.stopPropagation(); handleClick(item); });
     });
-  });
+  }
 
   function handleClick(item) {
     if (animatingMenu) return;

@@ -3,6 +3,15 @@
    style.css — Shared Stylesheet
    ============================================ */
 
+/* === CUSTOM FONT === */
+@font-face {
+  font-family: 'Feroniapi';
+  src: url('../fonts/Feroniapi-MediumItalic.otf') format('opentype');
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+}
+
 :root {
   /* === COLORS === */
   --color-bg: #e8efe6;
@@ -17,13 +26,13 @@
   --color-white: #f4f1ea;
 
   /* === FONTS === */
-  --font-display: 'Darker Grotesque', sans-serif;
-  --font-display-weight: 800;
-  --font-display-size: clamp(2.8rem, 6vw, 5rem);
+  --font-display: 'Feroniapi', 'Darker Grotesque', sans-serif;
+  --font-display-weight: 500;
+  --font-display-size: clamp(3rem, 6.5vw, 5.5rem);
   --font-display-spacing: 0.02em;
   --font-body: 'DM Mono', monospace;
   --font-mono: 'DM Mono', monospace;
-  --font-menu-size: 11px;
+  --font-menu-size: 12px;
   --font-menu-spacing: 3px;
 
   /* === LAYOUT === */
@@ -72,7 +81,8 @@ body::after {
 .loader.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
 .loader-text {
   font-family: var(--font-display);
-  font-size: 2.5rem; font-weight: 800;
+  font-size: 2.5rem; font-weight: 500;
+  font-style: italic;
   color: var(--color-white);
   animation: pulse 1.5s ease-in-out infinite;
 }
@@ -98,6 +108,7 @@ body::after {
   font-family: var(--font-display);
   font-size: var(--font-display-size);
   font-weight: var(--font-display-weight);
+  font-style: italic;
   letter-spacing: var(--font-display-spacing);
   color: var(--color-primary);
   line-height: 1;
@@ -235,7 +246,7 @@ body::after {
 /* === SUBMENU === */
 .submenu-container {
   position: absolute;
-  top: calc(-1 * var(--menu-gap) + 42px);
+  top: calc(-1 * var(--menu-gap) + 54px);
   left: 50%; transform: translateX(-50%);
   z-index: 50;
 }
@@ -273,48 +284,47 @@ body::after {
 
 @media (max-width: 850px) {
   :root {
-    --poster-w: 110px; --poster-h: 155px;
-    --side-margin: 14px;
-    --circle-size: min(400px, 54vw);
-    --menu-gap: 34px;
-    --font-display-size: clamp(2rem, 5.5vw, 3.5rem);
+    --poster-w: 115px; --poster-h: 160px;
+    --side-margin: 12px;
+    --circle-size: min(420px, 56vw);
+    --menu-gap: 36px;
+    --font-display-size: clamp(2.2rem, 6vw, 3.5rem);
     --font-menu-size: 10px;
     --font-menu-spacing: 2px;
   }
-  .nav-arrow-left { left: calc(var(--side-margin) + var(--poster-w) + 18px); }
-  .nav-arrow-right { right: calc(var(--side-margin) + var(--poster-w) + 18px); }
+  .nav-arrow-left { left: calc(var(--side-margin) + var(--poster-w) + 16px); }
+  .nav-arrow-right { right: calc(var(--side-margin) + var(--poster-w) + 16px); }
 }
 
 @media (max-width: 600px) {
   :root {
-    --poster-w: 80px; --poster-h: 115px;
-    --side-margin: 6px;
-    --circle-size: min(320px, 68vw);
-    --menu-gap: 30px;
+    --poster-w: 90px; --poster-h: 128px;
+    --side-margin: 5px;
+    --circle-size: calc(100vw - 2 * (var(--side-margin) + var(--poster-w) + 40px));
+    --menu-gap: 32px;
     --font-display-size: clamp(1.5rem, 7.5vw, 2.4rem);
-    --font-menu-size: 7.5px;
+    --font-menu-size: 8.5px;
     --font-menu-spacing: 1.5px;
     --border-width: 2px;
   }
-  /* Keep title on one line */
   .header { white-space: nowrap; }
   .title-main { white-space: nowrap; }
-  .nav-arrow { font-size: 1.6rem; }
-  .nav-arrow-left { left: calc(var(--side-margin) + var(--poster-w) + 12px); }
-  .nav-arrow-right { right: calc(var(--side-margin) + var(--poster-w) + 12px); }
-  .poster-label { font-size: 0.42rem; padding: 10px 6px; }
+  .nav-arrow { font-size: 1.8rem; }
+  .nav-arrow-left { left: calc(var(--side-margin) + var(--poster-w) + 10px); }
+  .nav-arrow-right { right: calc(var(--side-margin) + var(--poster-w) + 10px); }
+  .poster-label { font-size: 0.48rem; padding: 12px 8px; }
 }
 
-@media (max-width: 400px) {
+@media (max-width: 420px) {
   :root {
-    --poster-w: 62px; --poster-h: 90px;
-    --circle-size: min(260px, 70vw);
-    --menu-gap: 24px;
+    --poster-w: 72px; --poster-h: 104px;
+    --side-margin: 4px;
+    --menu-gap: 26px;
     --font-display-size: clamp(1.3rem, 8.5vw, 2rem);
-    --font-menu-size: 6.5px;
+    --font-menu-size: 7.5px;
     --font-menu-spacing: 1px;
   }
   .nav-arrow-left { left: calc(var(--side-margin) + var(--poster-w) + 8px); }
   .nav-arrow-right { right: calc(var(--side-margin) + var(--poster-w) + 8px); }
-  .poster-label { font-size: 0.38rem; padding: 6px 4px; }
+  .poster-label { font-size: 0.42rem; padding: 8px 6px; }
 }
