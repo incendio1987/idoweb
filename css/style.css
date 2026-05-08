@@ -297,62 +297,71 @@ body::after {
 
 @media (max-width: 600px) {
   :root {
-    --poster-w: 80px; --poster-h: 110px;
-    --side-margin: 4px;
-    --circle-size: 58vw;
-    --menu-gap: 32px;
+    --poster-w: 70px; --poster-h: 100px;
+    --side-margin: 6px;
+    --circle-size: 220px;
+    --menu-gap: 30px;
     --font-display-size: clamp(2rem, 10vw, 3rem);
-    --font-menu-size: 16px;
+    --font-menu-size: 14px;
     --font-menu-spacing: 2px;
     --border-width: 2px;
   }
   .header { white-space: nowrap; }
   .title-main { white-space: nowrap; }
-  .nav-arrow { font-size: 2rem; }
 
-  /*
-    Posters hug the circle. The circle+menu ring total width =
-    circle-size + menu-gap*2. Posters sit just outside that ring.
-    We use calc from 50% (center) outward.
-    Half of total ring = circle-size/2 + menu-gap
-    Poster left edge = 50% - ringHalf - poster-w - gap
-    Poster right edge = 50% + ringHalf + gap
-  */
+  /* Hide nav arrows on mobile — use swipe instead */
+  .nav-arrow { display: none; }
+
+  /* Posters: fixed position hugging the circle
+     Total ring diameter = 220 + 30*2 = 280px
+     Half = 140px from center
+     Phone center = 50%
+     So poster left edge = 50% - 140px - poster-w - 6px spacing */
   .poster-window-tl {
-    top: 15vh;
-    left: calc(50% - var(--circle-size)/2 - var(--menu-gap) - var(--poster-w) - 8px);
+    top: 18vw;
+    left: calc(50% - 140px - 70px - 6px);
   }
   .poster-window-tr {
-    top: 15vh;
-    right: calc(50% - var(--circle-size)/2 - var(--menu-gap) - var(--poster-w) - 8px);
+    top: 18vw;
+    right: calc(50% - 140px - 70px - 6px);
   }
   .poster-window-bl {
-    bottom: 8vh;
-    left: calc(50% - var(--circle-size)/2 - var(--menu-gap) - var(--poster-w) - 8px);
+    bottom: 6vw;
+    left: calc(50% - 140px - 70px - 6px);
   }
   .poster-window-br {
-    bottom: 8vh;
-    right: calc(50% - var(--circle-size)/2 - var(--menu-gap) - var(--poster-w) - 8px);
+    bottom: 6vw;
+    right: calc(50% - 140px - 70px - 6px);
   }
-
-  .nav-arrow-left {
-    left: calc(50% - var(--circle-size)/2 - var(--menu-gap) - var(--poster-w) - 36px);
-  }
-  .nav-arrow-right {
-    right: calc(50% - var(--circle-size)/2 - var(--menu-gap) - var(--poster-w) - 36px);
-  }
-
-  .poster-label { font-size: 0.52rem; padding: 10px 6px; }
+  .poster-label { font-size: 0.5rem; padding: 10px 6px; }
 }
 
-@media (max-width: 420px) {
+/* Larger phones (390px+) — scale up */
+@media (max-width: 600px) and (min-width: 390px) {
   :root {
-    --poster-w: 64px; --poster-h: 92px;
-    --circle-size: 54vw;
-    --menu-gap: 28px;
+    --circle-size: 240px;
+    --poster-w: 72px; --poster-h: 104px;
+  }
+  .poster-window-tl { left: calc(50% - 150px - 72px - 6px); }
+  .poster-window-tr { right: calc(50% - 150px - 72px - 6px); }
+  .poster-window-bl { left: calc(50% - 150px - 72px - 6px); }
+  .poster-window-br { right: calc(50% - 150px - 72px - 6px); }
+}
+
+/* Small phones (375px and below) */
+@media (max-width: 389px) {
+  :root {
+    --poster-w: 60px; --poster-h: 86px;
+    --circle-size: 200px;
+    --menu-gap: 26px;
     --font-display-size: clamp(1.7rem, 11vw, 2.6rem);
-    --font-menu-size: 14px;
+    --font-menu-size: 12px;
     --font-menu-spacing: 1.5px;
   }
-  .poster-label { font-size: 0.46rem; padding: 8px 5px; }
+  /* ring half = 200/2 + 26 = 126px */
+  .poster-window-tl { left: calc(50% - 126px - 60px - 4px); }
+  .poster-window-tr { right: calc(50% - 126px - 60px - 4px); }
+  .poster-window-bl { left: calc(50% - 126px - 60px - 4px); }
+  .poster-window-br { right: calc(50% - 126px - 60px - 4px); }
+  .poster-label { font-size: 0.44rem; padding: 8px 4px; }
 }
