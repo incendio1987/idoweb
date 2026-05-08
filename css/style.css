@@ -30,8 +30,8 @@
   --radius-card: 16px;
   --border-width: 2.5px;
   --transition-smooth: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  --poster-w: 120px;
-  --poster-h: 168px;
+  --poster-w: 180px;
+  --poster-h: 250px;
   --side-margin: 28px;
   --circle-size: min(520px, 52vw);
   --menu-gap: 48px;
@@ -162,10 +162,10 @@ body::after {
 .poster-card img { width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; }
 
 .poster-label {
-  font-family: var(--font-mono); font-size: 0.5rem;
+  font-family: var(--font-mono); font-size: 0.6rem;
   text-transform: lowercase; letter-spacing: 0.06em;
   text-align: center; color: var(--color-primary);
-  padding: 8px; line-height: 1.6;
+  padding: 16px 12px; line-height: 1.7;
   transition: color var(--transition-smooth);
 }
 
@@ -235,7 +235,7 @@ body::after {
 /* === SUBMENU === */
 .submenu-container {
   position: absolute;
-  top: calc(-1 * var(--menu-gap) - 14px);
+  top: calc(-1 * var(--menu-gap) + 28px);
   left: 50%; transform: translateX(-50%);
   z-index: 50;
 }
@@ -264,7 +264,7 @@ body::after {
 /* === RESPONSIVE === */
 @media (max-width: 1100px) {
   :root {
-    --poster-w: 95px; --poster-h: 135px;
+    --poster-w: 140px; --poster-h: 195px;
     --side-margin: 20px;
     --circle-size: min(440px, 50vw);
     --menu-gap: 40px;
@@ -273,7 +273,7 @@ body::after {
 
 @media (max-width: 850px) {
   :root {
-    --poster-w: 78px; --poster-h: 112px;
+    --poster-w: 110px; --poster-h: 155px;
     --side-margin: 14px;
     --circle-size: min(380px, 52vw);
     --menu-gap: 34px;
@@ -287,7 +287,7 @@ body::after {
 
 @media (max-width: 600px) {
   :root {
-    --poster-w: 62px; --poster-h: 90px;
+    --poster-w: 75px; --poster-h: 108px;
     --side-margin: 8px;
     --circle-size: min(300px, 62vw);
     --menu-gap: 28px;
@@ -299,12 +299,12 @@ body::after {
   .nav-arrow { font-size: 1.6rem; }
   .nav-arrow-left { left: calc(var(--side-margin) + var(--poster-w) + 14px); }
   .nav-arrow-right { right: calc(var(--side-margin) + var(--poster-w) + 14px); }
-  .poster-label { font-size: 0.38rem; }
+  .poster-label { font-size: 0.42rem; padding: 10px 6px; }
 }
 
 @media (max-width: 400px) {
   :root {
-    --poster-w: 50px; --poster-h: 72px;
+    --poster-w: 58px; --poster-h: 84px;
     --circle-size: min(240px, 64vw);
     --menu-gap: 22px;
     --font-display-size: clamp(1.4rem, 9vw, 2.2rem);
@@ -312,4 +312,5 @@ body::after {
   }
   .nav-arrow-left { left: calc(var(--side-margin) + var(--poster-w) + 10px); }
   .nav-arrow-right { right: calc(var(--side-margin) + var(--poster-w) + 10px); }
+  .poster-label { font-size: 0.38rem; padding: 6px 4px; }
 }
