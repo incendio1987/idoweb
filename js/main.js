@@ -87,15 +87,22 @@ function initFlipText() {
   }
 
   headerName.addEventListener('mouseenter', () => {
+    // Cancel any pending revert
+    if (revertTimer) { clearTimeout(revertTimer); revertTimer = null; }
     if (isShowingAlt && !busy) return;
     if (busy) { pendingTarget = altName; return; }
     flipTo(altName, () => { isShowingAlt = true; });
   });
 
+  let revertTimer = null;
   headerName.addEventListener('mouseleave', () => {
     if (!isShowingAlt && !busy) return;
-    if (busy) { pendingTarget = origName; return; }
-    flipTo(origName, () => { isShowingAlt = false; });
+    // Wait 3 seconds before reverting
+    revertTimer = setTimeout(() => {
+      revertTimer = null;
+      if (busy) { pendingTarget = origName; return; }
+      flipTo(origName, () => { isShowingAlt = false; });
+    }, 3000);
   });
 }
 

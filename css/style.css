@@ -297,34 +297,50 @@ body::after {
 
 @media (max-width: 600px) {
   :root {
-    --poster-w: 100px; --poster-h: 144px;
+    --poster-w: 110px; --poster-h: 155px;
     --side-margin: 4px;
-    --circle-size: 62vw;
-    --menu-gap: 38px;
-    --font-display-size: clamp(1.8rem, 9vw, 2.8rem);
-    --font-menu-size: 14px;
-    --font-menu-spacing: 2px;
+    --circle-size: 72vw;
+    --menu-gap: 40px;
+    --font-display-size: clamp(2rem, 10vw, 3rem);
+    --font-menu-size: 19px;
+    --font-menu-spacing: 2.5px;
     --border-width: 2px;
   }
   .header { white-space: nowrap; }
   .title-main { white-space: nowrap; }
-  .nav-arrow { font-size: 2rem; }
-  .nav-arrow-left { left: calc(var(--side-margin) + var(--poster-w) + 6px); }
-  .nav-arrow-right { right: calc(var(--side-margin) + var(--poster-w) + 6px); }
-  .poster-label { font-size: 0.52rem; padding: 10px 6px; }
+  .nav-arrow { font-size: 2.2rem; }
+
+  /* Posters: reposition near the circle instead of screen edges */
+  .poster-window-tl {
+    top: clamp(10px, 2vh, 30px);
+    left: calc(50% - var(--circle-size) / 2 - var(--menu-gap) - var(--poster-w) - 6px);
+  }
+  .poster-window-tr {
+    top: clamp(10px, 2vh, 30px);
+    right: calc(50% - var(--circle-size) / 2 - var(--menu-gap) - var(--poster-w) - 6px);
+  }
+  .poster-window-bl {
+    bottom: clamp(10px, 2vh, 30px);
+    left: calc(50% - var(--circle-size) / 2 - var(--menu-gap) - var(--poster-w) - 6px);
+  }
+  .poster-window-br {
+    bottom: clamp(10px, 2vh, 30px);
+    right: calc(50% - var(--circle-size) / 2 - var(--menu-gap) - var(--poster-w) - 6px);
+  }
+
+  .nav-arrow-left { left: calc(50% - var(--circle-size) / 2 - var(--menu-gap) - var(--poster-w) - 30px); }
+  .nav-arrow-right { right: calc(50% - var(--circle-size) / 2 - var(--menu-gap) - var(--poster-w) - 30px); }
+  .poster-label { font-size: 0.55rem; padding: 12px 8px; }
 }
 
 @media (max-width: 420px) {
   :root {
-    --poster-w: 82px; --poster-h: 118px;
-    --side-margin: 3px;
-    --circle-size: 58vw;
-    --menu-gap: 34px;
-    --font-display-size: clamp(1.5rem, 10vw, 2.4rem);
-    --font-menu-size: 12px;
-    --font-menu-spacing: 1.5px;
+    --poster-w: 90px; --poster-h: 130px;
+    --circle-size: 68vw;
+    --menu-gap: 36px;
+    --font-display-size: clamp(1.7rem, 11vw, 2.6rem);
+    --font-menu-size: 17px;
+    --font-menu-spacing: 2px;
   }
-  .nav-arrow-left { left: calc(var(--side-margin) + var(--poster-w) + 4px); }
-  .nav-arrow-right { right: calc(var(--side-margin) + var(--poster-w) + 4px); }
-  .poster-label { font-size: 0.46rem; padding: 8px 5px; }
+  .poster-label { font-size: 0.5rem; padding: 10px 6px; }
 }
