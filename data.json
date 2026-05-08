@@ -1,0 +1,86 @@
+{
+  "site": {
+    "title": "Idoia Esteban",
+    "subtitle": "diseño de producción",
+    "email": "idoia@ejemplo.com",
+    "instagram": "",
+    "imdb": ""
+  },
+  "theme": {
+    "color_bg": "#e8efe6",
+    "color_bg_alt": "#dce8d9",
+    "color_primary": "#1a5c2a",
+    "color_primary_light": "#2a7a3a",
+    "color_primary_dark": "#0e3d1a",
+    "color_accent": "#3da355",
+    "color_white": "#f4f1ea",
+    "font_display": "'Darker Grotesque', sans-serif",
+    "font_display_weight": "800",
+    "font_display_size": "clamp(2.8rem, 6vw, 5rem)",
+    "font_display_spacing": "0.02em",
+    "font_body": "'DM Mono', monospace",
+    "font_menu_size": "11px",
+    "font_menu_spacing": "3px"
+  },
+  "menu": [
+    {
+      "id": "películas",
+      "label": "PELÍCULAS",
+      "submenu": [
+        { "label": "peli 1", "url": "pages/pelicula.html?id=1" },
+        { "label": "peli 2", "url": "pages/pelicula.html?id=2" },
+        { "label": "peli 3", "url": "pages/pelicula.html?id=3" },
+        { "label": "peli 4", "url": "pages/pelicula.html?id=4" }
+      ]
+    },
+    {
+      "id": "contacto",
+      "label": "CONTACTO",
+      "submenu": [
+        { "label": "email", "url": "mailto:idoia@ejemplo.com" },
+        { "label": "instagram", "url": "#" },
+        { "label": "imdb", "url": "#" }
+      ]
+    },
+    {
+      "id": "trabajos",
+      "label": "TRABAJOS",
+      "submenu": [
+        { "label": "largometrajes", "url": "#" },
+        { "label": "series", "url": "#" },
+        { "label": "publicidad", "url": "#" }
+      ]
+    },
+    {
+      "id": "sobre mí",
+      "label": "SOBRE MÍ",
+      "submenu": [
+        { "label": "biografía", "url": "pages/sobre-mi.html" },
+        { "label": "premios", "url": "pages/sobre-mi.html#premios" },
+        { "label": "cv", "url": "pages/sobre-mi.html#cv" }
+      ]
+    },
+    {
+      "id": "proceso",
+      "label": "PROCESO",
+      "submenu": [
+        { "label": "cómo trabajo", "url": "pages/proceso.html" },
+        { "label": "bocetos", "url": "pages/proceso.html#bocetos" },
+        { "label": "maquetas", "url": "pages/proceso.html#maquetas" }
+      ]
+    }
+  ],
+  "works": [
+    {
+      "id": 1,
+      "title": "Peli 1",
+      "year": 2024,
+      "director": "",
+      "type": "",
+      "description": "",
+      "poster": "img/posters/peli1.jpg",
+      "before_after": [],
+      "gallery": []
+    }
+  ]
+}

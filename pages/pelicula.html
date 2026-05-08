@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Película — Idoia Esteban</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=Darker+Grotesque:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+    body { height: auto; overflow: auto; }
+    .page-inner { max-width: 960px; margin: 0 auto; padding: 3rem 2rem; }
+    .page-back {
+      font-family: var(--font-mono); font-size: 0.75rem;
+      letter-spacing: 0.1em; display: inline-flex; align-items: center;
+      gap: 6px; margin-bottom: 2rem; text-transform: lowercase;
+      transition: color var(--transition-smooth);
+    }
+    .page-back:hover { color: var(--color-accent); }
+    .peli-title {
+      font-family: var(--font-display); font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 800; color: var(--color-primary); margin-bottom: 0.5rem;
+    }
+    .peli-meta {
+      font-family: var(--font-mono); font-size: 0.7rem;
+      letter-spacing: 0.1em; color: var(--color-text-light); margin-bottom: 2rem;
+    }
+    .peli-description { font-size: 1rem; line-height: 1.7; margin-bottom: 2.5rem; }
+    .peli-gallery {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 14px; margin-top: 1.5rem;
+    }
+    .peli-gallery-item {
+      aspect-ratio: 16/10; background: var(--color-bg-alt);
+      border: var(--border-width) solid var(--color-border);
+      border-radius: var(--radius-card); display: flex;
+      align-items: center; justify-content: center;
+      font-family: var(--font-mono); font-size: 0.6rem;
+      text-transform: lowercase; letter-spacing: 0.1em; color: var(--color-text-light);
+    }
+  </style>
+</head>
+<body>
+  <div class="page-inner">
+    <a href="../index.html" class="page-back">&#8249; volver</a>
+    <h1 class="peli-title">Título de la Película</h1>
+    <p class="peli-meta">2024 · director · tipo</p>
+    <p class="peli-description">Descripción del trabajo de diseño de producción.</p>
+    <div class="peli-gallery">
+      <div class="peli-gallery-item">antes</div>
+      <div class="peli-gallery-item">después</div>
+      <div class="peli-gallery-item">foto 1</div>
+      <div class="peli-gallery-item">foto 2</div>
+    </div>
+  </div>
+</body>
+</html>
