@@ -297,50 +297,62 @@ body::after {
 
 @media (max-width: 600px) {
   :root {
-    --poster-w: 110px; --poster-h: 155px;
+    --poster-w: 80px; --poster-h: 110px;
     --side-margin: 4px;
-    --circle-size: 72vw;
-    --menu-gap: 40px;
+    --circle-size: 58vw;
+    --menu-gap: 32px;
     --font-display-size: clamp(2rem, 10vw, 3rem);
-    --font-menu-size: 19px;
-    --font-menu-spacing: 2.5px;
+    --font-menu-size: 16px;
+    --font-menu-spacing: 2px;
     --border-width: 2px;
   }
   .header { white-space: nowrap; }
   .title-main { white-space: nowrap; }
-  .nav-arrow { font-size: 2.2rem; }
+  .nav-arrow { font-size: 2rem; }
 
-  /* Posters: reposition near the circle instead of screen edges */
+  /*
+    Posters hug the circle. The circle+menu ring total width =
+    circle-size + menu-gap*2. Posters sit just outside that ring.
+    We use calc from 50% (center) outward.
+    Half of total ring = circle-size/2 + menu-gap
+    Poster left edge = 50% - ringHalf - poster-w - gap
+    Poster right edge = 50% + ringHalf + gap
+  */
   .poster-window-tl {
-    top: clamp(10px, 2vh, 30px);
-    left: calc(50% - var(--circle-size) / 2 - var(--menu-gap) - var(--poster-w) - 6px);
+    top: 15vh;
+    left: calc(50% - var(--circle-size)/2 - var(--menu-gap) - var(--poster-w) - 8px);
   }
   .poster-window-tr {
-    top: clamp(10px, 2vh, 30px);
-    right: calc(50% - var(--circle-size) / 2 - var(--menu-gap) - var(--poster-w) - 6px);
+    top: 15vh;
+    right: calc(50% - var(--circle-size)/2 - var(--menu-gap) - var(--poster-w) - 8px);
   }
   .poster-window-bl {
-    bottom: clamp(10px, 2vh, 30px);
-    left: calc(50% - var(--circle-size) / 2 - var(--menu-gap) - var(--poster-w) - 6px);
+    bottom: 8vh;
+    left: calc(50% - var(--circle-size)/2 - var(--menu-gap) - var(--poster-w) - 8px);
   }
   .poster-window-br {
-    bottom: clamp(10px, 2vh, 30px);
-    right: calc(50% - var(--circle-size) / 2 - var(--menu-gap) - var(--poster-w) - 6px);
+    bottom: 8vh;
+    right: calc(50% - var(--circle-size)/2 - var(--menu-gap) - var(--poster-w) - 8px);
   }
 
-  .nav-arrow-left { left: calc(50% - var(--circle-size) / 2 - var(--menu-gap) - var(--poster-w) - 30px); }
-  .nav-arrow-right { right: calc(50% - var(--circle-size) / 2 - var(--menu-gap) - var(--poster-w) - 30px); }
-  .poster-label { font-size: 0.55rem; padding: 12px 8px; }
+  .nav-arrow-left {
+    left: calc(50% - var(--circle-size)/2 - var(--menu-gap) - var(--poster-w) - 36px);
+  }
+  .nav-arrow-right {
+    right: calc(50% - var(--circle-size)/2 - var(--menu-gap) - var(--poster-w) - 36px);
+  }
+
+  .poster-label { font-size: 0.52rem; padding: 10px 6px; }
 }
 
 @media (max-width: 420px) {
   :root {
-    --poster-w: 90px; --poster-h: 130px;
-    --circle-size: 68vw;
-    --menu-gap: 36px;
+    --poster-w: 64px; --poster-h: 92px;
+    --circle-size: 54vw;
+    --menu-gap: 28px;
     --font-display-size: clamp(1.7rem, 11vw, 2.6rem);
-    --font-menu-size: 17px;
-    --font-menu-spacing: 2px;
+    --font-menu-size: 14px;
+    --font-menu-spacing: 1.5px;
   }
-  .poster-label { font-size: 0.5rem; padding: 10px 6px; }
+  .poster-label { font-size: 0.46rem; padding: 8px 5px; }
 }
