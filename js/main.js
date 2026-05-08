@@ -24,9 +24,9 @@ function initFlipText() {
   const headerName = document.getElementById('headerName');
   if (!flipEl || !headerName) return;
 
-  const origName = flipEl.dataset.original || 'idoia esteban';
-  const altName  = flipEl.dataset.alt || 'diseño de producción';
-  const alphabet = 'abcdefghijklmnñopqrstuvwxyz';
+  const origName = flipEl.dataset.original || 'Idoia Esteban';
+  const altName  = flipEl.dataset.alt || 'Diseño de Producción';
+  const alphabet = 'abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ';
   let busy = false;
   let pendingTarget = null;
   let isShowingAlt = false;
