@@ -307,7 +307,6 @@ body::after {
   .title-main { white-space: nowrap; }
   .nav-arrow { display: none; }
 
-  /* Circle: big, centered */
   .circle-area {
     width: 68vw;
     height: 68vw;
@@ -320,35 +319,24 @@ body::after {
     height: calc(100% + 10vw);
   }
 
-  /*
-    Posters fill the space between screen edge and the menu ring.
-    Menu ring outer edge = 50% ± (68vw/2 + 5vw) = 50% ± 39vw
-    So from left edge to ring = 50vw - 39vw = 11vw
-    Poster width should fill that: ~30vw (overlapping slightly behind ring is fine)
-    Poster left = 1vw, width = ~28vw → right edge at 29vw, ring starts at 11vw
-    Actually the ring text sits ON the ring line so posters should go up to ~12vw from center
-    Poster: left=1vw, width = 50vw - 39vw - 2vw = 9vw ... that's tiny.
-    
-    The screenshot shows posters MUCH bigger — they go BEHIND/UNDER the menu ring.
-    So let's make them big and let them tuck under the circle area.
-    Poster width ≈ 28vw, height ≈ 30vw
-  */
+  /* Posters: tall rectangles (movie poster ratio ~2:3), big, below header */
   .poster-window {
-    width: 28vw;
-    height: 30vw;
+    width: 30vw;
+    height: 42vw;
     border-radius: 12px;
   }
   .poster-card {
-    width: 28vw;
-    height: 30vw;
+    width: 30vw;
+    height: 42vw;
   }
 
-  .poster-window-tl { top: 14vw;  left: 1vw; }
-  .poster-window-tr { top: 14vw;  right: 1vw; }
+  /* Top posters start below header (~22vw from top) */
+  .poster-window-tl { top: 22vw;  left: 1vw; }
+  .poster-window-tr { top: 22vw;  right: 1vw; }
   .poster-window-bl { bottom: 2vw; left: 1vw; }
   .poster-window-br { bottom: 2vw; right: 1vw; }
 
-  .poster-label { font-size: 0.5rem; padding: 8px 4px; line-height: 1.4; }
+  .poster-label { font-size: 0.55rem; padding: 10px 6px; line-height: 1.5; }
 
   .submenu-container {
     top: -3vw;
