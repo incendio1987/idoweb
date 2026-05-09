@@ -313,13 +313,13 @@ body::after {
     --mobile-menu-gap: 5vw;
 
     /* Carteles de películas */
-    --mobile-poster-w: 28vw;       /* ancho del cartel */
-    --mobile-poster-h: 40vw;       /* alto del cartel (más = más rectangular) */
+    --mobile-poster-w: 22vw;       /* ancho del cartel */
+    --mobile-poster-h: 32vw;       /* alto del cartel (más = más rectangular) */
     --mobile-poster-margin: 1vw;   /* margen desde el borde de pantalla */
 
     /* Posición vertical de los carteles */
-    --mobile-poster-top: 20vw;     /* distancia desde arriba (sube = menos, baja = más) */
-    --mobile-poster-bottom: 2vw;   /* distancia desde abajo */
+    --mobile-poster-top: 18vw;     /* distancia desde arriba (sube = menos, baja = más) */
+    --mobile-poster-bottom: 12vw;   /* distancia desde abajo */
   }
 
   .header { white-space: nowrap; }
