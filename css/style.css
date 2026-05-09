@@ -307,7 +307,7 @@ body::after {
        ============================================= */
 
     /* Círculo: tamaño en % del ancho de pantalla */
-    --mobile-circle: 68vw;
+    --mobile-circle: 75vw;
 
     /* Menú giratorio: espacio extra alrededor del círculo */
     --mobile-menu-gap: 5vw;
@@ -315,7 +315,7 @@ body::after {
     /* Carteles de películas */
     --mobile-poster-w: 22vw;       /* ancho del cartel */
     --mobile-poster-h: 32vw;       /* alto del cartel (más = más rectangular) */
-    --mobile-poster-margin: 1vw;   /* margen desde el borde de pantalla */
+    --mobile-poster-margin: 8vw;   /* margen desde el borde de pantalla */
 
     /* Posición vertical de los carteles */
     --mobile-poster-top: 18vw;     /* distancia desde arriba (sube = menos, baja = más) */
