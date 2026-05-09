@@ -318,7 +318,7 @@ body::after {
     --mobile-poster-margin: 1vw;   /* margen desde el borde de pantalla */
 
     /* Posición vertical de los carteles */
-    --mobile-poster-top: 28vw;     /* distancia desde arriba (sube = menos, baja = más) */
+    --mobile-poster-top: 20vw;     /* distancia desde arriba (sube = menos, baja = más) */
     --mobile-poster-bottom: 2vw;   /* distancia desde abajo */
   }
 
