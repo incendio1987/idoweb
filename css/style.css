@@ -245,7 +245,7 @@ body::after {
 /* === SUBMENU === */
 .submenu-container {
   position: absolute;
-  top: calc(-1 * var(--menu-gap) + 54px);
+  top: 10px;
   left: 50%; transform: translateX(-50%);
   z-index: 50;
 }
@@ -319,7 +319,7 @@ body::after {
 
     /* Posición vertical de los carteles */
     --mobile-poster-top: 20vw;     /* distancia desde arriba (sube = menos, baja = más) */
-    --mobile-poster-bottom: 20vw;   /* distancia desde abajo */
+    --mobile-poster-bottom: 20vw;  /* distancia desde abajo */
   }
 
   .header { white-space: nowrap; }
@@ -348,12 +348,16 @@ body::after {
     height: var(--mobile-poster-h);
   }
 
-  .poster-window-tl { top: var(--mobile-poster-top);    left: var(--mobile-poster-margin); }
-  .poster-window-tr { top: var(--mobile-poster-top);    right: var(--mobile-poster-margin); }
+  .poster-window-tl { top: var(--mobile-poster-top);       left: var(--mobile-poster-margin); }
+  .poster-window-tr { top: var(--mobile-poster-top);       right: var(--mobile-poster-margin); }
   .poster-window-bl { bottom: var(--mobile-poster-bottom); left: var(--mobile-poster-margin); }
   .poster-window-br { bottom: var(--mobile-poster-bottom); right: var(--mobile-poster-margin); }
 
   .poster-label { font-size: 0.55rem; padding: 10px 6px; line-height: 1.5; }
 
-  .submenu-container { top: calc(-1 * var(--mobile-menu-gap) + 2vw); }
+  /* Submenú: abre DEBAJO del texto del menú a las 12
+     El ring SVG empieza a -5vw del circle-area.
+     Las 12 en punto = borde superior del ring = -5vw del circle.
+     Queremos el submenú justo debajo → top ≈ 3vw (dentro del circle) */
+  .submenu-container { top: 3vw; }
 }
