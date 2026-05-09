@@ -318,8 +318,8 @@ body::after {
     --mobile-poster-margin: 8vw;   /* margen desde el borde de pantalla */
 
     /* Posición vertical de los carteles */
-    --mobile-poster-top: 18vw;     /* distancia desde arriba (sube = menos, baja = más) */
-    --mobile-poster-bottom: 12vw;   /* distancia desde abajo */
+    --mobile-poster-top: 20vw;     /* distancia desde arriba (sube = menos, baja = más) */
+    --mobile-poster-bottom: 20vw;   /* distancia desde abajo */
   }
 
   .header { white-space: nowrap; }
