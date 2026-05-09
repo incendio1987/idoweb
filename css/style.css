@@ -301,6 +301,25 @@ body::after {
     --font-display-size: clamp(2rem, 10vw, 3rem);
     --font-menu-size: 14px;
     --font-menu-spacing: 2px;
+
+    /* =============================================
+       MOBILE TUNING — cambia estos valores para ajustar
+       ============================================= */
+
+    /* Círculo: tamaño en % del ancho de pantalla */
+    --mobile-circle: 68vw;
+
+    /* Menú giratorio: espacio extra alrededor del círculo */
+    --mobile-menu-gap: 5vw;
+
+    /* Carteles de películas */
+    --mobile-poster-w: 28vw;       /* ancho del cartel */
+    --mobile-poster-h: 40vw;       /* alto del cartel (más = más rectangular) */
+    --mobile-poster-margin: 1vw;   /* margen desde el borde de pantalla */
+
+    /* Posición vertical de los carteles */
+    --mobile-poster-top: 28vw;     /* distancia desde arriba (sube = menos, baja = más) */
+    --mobile-poster-bottom: 2vw;   /* distancia desde abajo */
   }
 
   .header { white-space: nowrap; }
@@ -308,37 +327,33 @@ body::after {
   .nav-arrow { display: none; }
 
   .circle-area {
-    width: 68vw;
-    height: 68vw;
+    width: var(--mobile-circle);
+    height: var(--mobile-circle);
   }
 
   .menu-ring-svg {
-    top: -5vw;
-    left: -5vw;
-    width: calc(100% + 10vw);
-    height: calc(100% + 10vw);
+    top: calc(-1 * var(--mobile-menu-gap));
+    left: calc(-1 * var(--mobile-menu-gap));
+    width: calc(100% + var(--mobile-menu-gap) * 2);
+    height: calc(100% + var(--mobile-menu-gap) * 2);
   }
 
-  /* Posters: tall rectangles (movie poster ratio ~2:3), big, below header */
   .poster-window {
-    width: 30vw;
-    height: 42vw;
+    width: var(--mobile-poster-w);
+    height: var(--mobile-poster-h);
     border-radius: 12px;
   }
   .poster-card {
-    width: 30vw;
-    height: 42vw;
+    width: var(--mobile-poster-w);
+    height: var(--mobile-poster-h);
   }
 
-  /* Top posters start below header (~22vw from top) */
-  .poster-window-tl { top: 22vw;  left: 1vw; }
-  .poster-window-tr { top: 22vw;  right: 1vw; }
-  .poster-window-bl { bottom: 2vw; left: 1vw; }
-  .poster-window-br { bottom: 2vw; right: 1vw; }
+  .poster-window-tl { top: var(--mobile-poster-top);    left: var(--mobile-poster-margin); }
+  .poster-window-tr { top: var(--mobile-poster-top);    right: var(--mobile-poster-margin); }
+  .poster-window-bl { bottom: var(--mobile-poster-bottom); left: var(--mobile-poster-margin); }
+  .poster-window-br { bottom: var(--mobile-poster-bottom); right: var(--mobile-poster-margin); }
 
   .poster-label { font-size: 0.55rem; padding: 10px 6px; line-height: 1.5; }
 
-  .submenu-container {
-    top: -3vw;
-  }
+  .submenu-container { top: calc(-1 * var(--mobile-menu-gap) + 2vw); }
 }
