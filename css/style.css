@@ -307,19 +307,7 @@ body::after {
   .title-main { white-space: nowrap; }
   .nav-arrow { display: none; }
 
-  /*
-    MOBILE LAYOUT — all in vw so it scales perfectly.
-    
-    Screen = 100vw
-    Layout: poster(10vw) + gap(1vw) + menuGap(5vw) + circle + menuGap(5vw) + gap(1vw) + poster(10vw)
-    Total sides = 2 * (10 + 1 + 5) = 32vw
-    Circle = 100vw - 32vw = 68vw
-    
-    Menu ring SVG extends by menu-gap on each side = circle sits in the middle.
-    Poster left = 1vw from edge (tiny margin)
-    Ring edge from center = circle/2 + menuGap = 34vw + 5vw = 39vw
-    Poster right edge should be at 50vw - 39vw - 1vw gap = 10vw from edge ✓
-  */
+  /* Circle: big, centered */
   .circle-area {
     width: 68vw;
     height: 68vw;
@@ -332,21 +320,35 @@ body::after {
     height: calc(100% + 10vw);
   }
 
+  /*
+    Posters fill the space between screen edge and the menu ring.
+    Menu ring outer edge = 50% ± (68vw/2 + 5vw) = 50% ± 39vw
+    So from left edge to ring = 50vw - 39vw = 11vw
+    Poster width should fill that: ~30vw (overlapping slightly behind ring is fine)
+    Poster left = 1vw, width = ~28vw → right edge at 29vw, ring starts at 11vw
+    Actually the ring text sits ON the ring line so posters should go up to ~12vw from center
+    Poster: left=1vw, width = 50vw - 39vw - 2vw = 9vw ... that's tiny.
+    
+    The screenshot shows posters MUCH bigger — they go BEHIND/UNDER the menu ring.
+    So let's make them big and let them tuck under the circle area.
+    Poster width ≈ 28vw, height ≈ 30vw
+  */
   .poster-window {
-    width: 10vw;
-    height: 22vw;
+    width: 28vw;
+    height: 30vw;
+    border-radius: 12px;
   }
   .poster-card {
-    width: 10vw;
-    height: 22vw;
+    width: 28vw;
+    height: 30vw;
   }
 
-  .poster-window-tl { top: 16vw; left: 1vw; }
-  .poster-window-tr { top: 16vw; right: 1vw; }
-  .poster-window-bl { bottom: 4vw; left: 1vw; }
-  .poster-window-br { bottom: 4vw; right: 1vw; }
+  .poster-window-tl { top: 14vw;  left: 1vw; }
+  .poster-window-tr { top: 14vw;  right: 1vw; }
+  .poster-window-bl { bottom: 2vw; left: 1vw; }
+  .poster-window-br { bottom: 2vw; right: 1vw; }
 
-  .poster-label { font-size: 0.4rem; padding: 4px 2px; line-height: 1.4; }
+  .poster-label { font-size: 0.5rem; padding: 8px 4px; line-height: 1.4; }
 
   .submenu-container {
     top: -3vw;
